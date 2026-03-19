@@ -59,6 +59,7 @@ def setup_parameters(device='cuda'):
     ps['Q'] = torch.kron(torch.eye(ps['nTarget'], device=device), q_single)
 
     # Precompute Cholesky decomposition of Q for fast batched noise generation
+    # choles?
     ps['Q_chol'] = torch.linalg.cholesky(ps['Q'])
 
     return ps
