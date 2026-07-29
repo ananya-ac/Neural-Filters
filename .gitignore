@@ -44,6 +44,12 @@
 !solver.py
 !config.py
 
+# Archived snapshot of the pre-rename *_legacy scripts -- tracked in full
+# (including eval/plotting scripts, unlike the rest of this file) since
+# it's meant as a complete point-in-time copy, not scoped by role.
+!filtering/legacy_scripts/
+!filtering/legacy_scripts/**
+
 # Deliberately NOT un-ignored: every eval/inspect/debug/plotting/analysis
 # script (control_eval.py, no_control_eval.py, particle_variance_eval.py,
 # plot_particle_trajectories.py, analyze_*.py, debug_*.py, baseline_edh*.py,
