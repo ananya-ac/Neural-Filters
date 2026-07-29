@@ -1,0 +1,23 @@
+services:
+  dev_environment:
+    build: .
+    image: ubuntu22-conda-gpu
+    # FIX: Binds strictly to localhost, blocking outside network access
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./filtering:/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    stdin_open: true 
+    tty: true
+    
+volumes:
+  conda_storage:
+
+

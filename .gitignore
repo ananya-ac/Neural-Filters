@@ -1,0 +1,58 @@
+# This directory has 140+ experiment-run folders (wandb logs, checkpoints,
+# eval outputs) totaling several GB, against a few hundred KB of source
+# code. Ignore everything by default and explicitly allow back in only
+# what should be tracked, rather than blacklisting every run-folder name.
+*
+
+!.gitignore
+!Dockerfile
+!docker-compose.yaml
+
+# git can't re-include a file whose parent directory is excluded by an
+# earlier rule -- filtering/ itself matches the blanket `*` above, so it
+# must be explicitly un-ignored before any of the per-extension rules
+# below can reach anything inside it.
+!filtering/
+!requirements.txt
+
+# Only data-generation and model-training scripts, plus the shared modules
+# they import (dataset.py/solver.py/config.py) -- NOT eval/inspect/debug/
+# plotting scripts, notebooks, or anything else, even though those are
+# also *.py. No blanket !*.py rule -- every kept .py file is named
+# explicitly below on purpose.
+
+# Data generation
+!ackermann_dataset.py
+!data_gen.py
+!fork_data_gen.py
+!radar_data.py
+!range_only_data_gen.py
+!tdoa_data_gen.py
+!lorenz.py
+
+# Model + training
+!model.py
+!train.py
+!model_known_node.py
+!train_known_node.py
+!ackermann_main.py
+
+# Shared dependencies of the above (train.py/train_known_node.py
+# need dataset.py; model.py/model_known_node.py need solver.py;
+# data_gen.py needs config.py)
+!dataset.py
+!solver.py
+!config.py
+
+# Deliberately NOT un-ignored: every eval/inspect/debug/plotting/analysis
+# script (control_eval.py, no_control_eval.py, particle_variance_eval.py,
+# plot_particle_trajectories.py, analyze_*.py, debug_*.py, baseline_edh*.py,
+# find.py, training_time.py, check_crps_ckpt.py, inspect_dataset.py,
+# ackermann_eval.py, eval_lorenz.py, known_node_repeated_eval.py,
+# no_control_eval_known_node.py, plot.py, plot_multiobject_trajectories.py,
+# etc.), *.ipynb notebooks, *.pt (dataset + checkpoint files), *.png,
+# *.sh, *.md, *.csv, and filtering/KalmanNet_TSP/.
+#
+# ackermann_main.py is included as a training script by role, but is
+# currently broken (imports a model_ackermann module that doesn't exist
+# in this repo) -- kept per the stated category, not because it runs.
